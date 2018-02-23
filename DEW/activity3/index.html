@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Activity 3: Forms &amp; click event</title>
+  </head>
+  <body>
+    <h1>Activity 3: Forms &amp; click event</h1>
+    <p>Add a form with two fields ("Rows" and "Columns") and a button ("Generate Table"). When the button is clicked it have to:</p>
+      <ol>
+        <li>remove a table#generated if exists </li>
+        <li>Add a table with as many rows and columns both Rows and Columns fields indicate</li>
+        <li>Each table cell must contain a text like: "Row: X, Col: Y"</li>
+      </ol>
+
+      <form>
+        Filas:
+        <input type="text" id="filas"><br>
+        Columnas:
+        <input type="text" id="columnas"><br>
+        <input type="button" name="boton" value="generar" onclick="generarMatriz();">
+      </form>
+
+    <script>
+      
+      function generarMatriz() {
+          
+          var filas= document.getElementById('filas').value;
+          var columnas=parseInt(document.getElementById('columnas').value);
+
+          var matriz=Array();
+           for (var i = 0; i < filas; i++) {
+             matriz[i]= new Array(columnas);
+           }
+
+            
+
+           for (var y=0; y < matriz.length; y++) {
+             for (var x=0; x < matriz[0].length; x++) {
+                matriz[y][x]=Math.floor(Math.random()*100)+1;
+              }
+            }
+
+            document.write("<table border=\"1\">");
+           for (var y=0; y < matriz.length; y++) {
+                document.write("<tr>");
+             for (var x=0; x < matriz[0].length; x++) {
+                  document.write("<td>"+matriz[y][x]+"</td>");
+                }
+                document.write("</tr>");
+              }
+              document.write("</table> <br><br>");
+
+      }
+
+
+
+    </script>
+
+  </body>
+</html>
