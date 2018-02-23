@@ -21,26 +21,122 @@
   </head>
   <body>
     <h1>Activity 5: the audio tag + events</h1>
-    <p>This is a music player with a playlist</p>
+    <p>This is a music player with a lista</p>
     <ul>
-      <li>Add a play icon to the item in the playlist that is currently playing.</li>
+      <li>Add a play icon to the item in the lista that is currently reproduciendo.</li>
       <li>Add controls to <a href="https://developer.mozilla.org/es/docs/Web/HTML/Elemento/audio">audio tag</a>: play/pause, go back, go forward.</li>
-      <li>When 1 audio ends the following one must estart playing automatically</li>
+      <li>When 1 audio ends the following one must estart reproduciendo automatically</li>
     </ul>
 
-    <ol>
-      <li>music1.mp3</li>
-      <li>music2.mp3</li>
-      <li>music3.mp3</li>
+    <ol class="lista">
+      <li><i class="fa fa-volume-up"></i>Rise</li>
+      <li><i></i>Shoot to Thrill</li>
+      <li><i></i>Lose Yourself</li>
     </ol>
     <audio>
-     <source src="" type="audio/mpeg">
+     <source src="rise.mp3" type="audio/mpeg">
+     <source src="Shoot to Thrill.mp3" type="audio/mpeg">
+     <source src="Lose Yourself.mp3" type="audio/mpeg">
      Your browser does not support the audio tag.
     </audio>
     <div class="controls">
       <div class="play"><i class="fa fa-play"></i></div>
-      <div class="backward"><i class="fa fa-step-backward"></i></div>
-      <div class="fordward"><i class="fa fa-step-forward"></i></div>
+      <div class="atras"><i class="fa fa-step-backward"></i></div>
+      <div class="siguiente"><i class="fa fa-step-forward"></i></div>
     </div>
+    <script>
+      
+      function play(audio){
+        if (!reproduciendo){
+
+          audio.play();
+          reproduciendo = true;
+
+        }else{
+
+          audio.pause();
+          reproduciendo = false;
+        }
+      }
+
+      function atras(audio,lista){
+
+        if (numeroCancion == 0){
+
+          lista.children[numeroCancion].children[0].classList.remove("fa");
+          lista.children[numeroCancion].children[0].classList.remove("fa-volume-up");
+          numeroCancion = lista.children.length-1; 
+          audio.src = audio.children[numeroCancion].src;
+          lista.children[numeroCancion].children[0].classList.add("fa");
+          lista.children[numeroCancion].children[0].classList.add("fa-volume-up");
+          reproduciendo = false;
+
+          play(audio);
+
+        }else{
+
+          lista.children[numeroCancion].children[0].classList.remove("fa");
+          lista.children[numeroCancion].children[0].classList.remove("fa-volume-up");
+          numeroCancion--;
+          audio.src = audio.children[numeroCancion].src;
+          lista.children[numeroCancion].children[0].classList.add("fa");
+          lista.children[numeroCancion].children[0].classList.add("fa-volume-up");
+          reproduciendo = false;
+
+          play(audio);
+
+        }
+      }
+      function siguiente(audio,lista){
+
+        if (numeroCancion == lista.children.length-1){
+
+          lista.children[numeroCancion].children[0].classList.remove("fa");
+          lista.children[numeroCancion].children[0].classList.remove("fa-volume-up");
+          numeroCancion = 0; 
+          audio.src = audio.children[numeroCancion].src;
+          lista.children[numeroCancion].children[0].classList.add("fa");
+          lista.children[numeroCancion].children[0].classList.add("fa-volume-up");
+          reproduciendo = false;
+
+          play(audio);
+        }else{
+
+          lista.children[numeroCancion].children[0].classList.remove("fa");
+          lista.children[numeroCancion].children[0].classList.remove("fa-volume-up");
+          numeroCancion++;
+          audio.src = audio.children[numeroCancion].src;
+          lista.children[numeroCancion].children[0].classList.add("fa");
+          lista.children[numeroCancion].children[0].classList.add("fa-volume-up");
+          reproduciendo = false;
+
+          play(audio);
+        }
+      }
+      let reproduciendo = false;
+      let numeroCancion = 0;
+      
+      var audio = document.getElementsByTagName("audio")[0];
+      var playB = document.getElementsByClassName("play")[0];
+      var atrasB = document.getElementsByClassName("atras")[0];
+      var siguienteB = document.getElementsByClassName("siguiente")[0];
+      var lista =document.getElementsByClassName("lista")[0] ;
+
+      audio.src = audio.children[0].src;
+      playB.addEventListener("click",function(){
+        play(audio,lista);
+      });
+
+      atrasB.addEventListener("click",function(){
+        atras(audio,lista);
+      });
+
+      siguienteB.addEventListener("click",function(){
+        siguiente(audio,lista);
+      });
+
+      audio.addEventListener("ended", function(){siguiente(audio,lista);});
+      play(audio,lista);
+    </script>
   </body>
 </html>
